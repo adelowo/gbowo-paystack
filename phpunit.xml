@@ -1,0 +1,25 @@
+<phpunit colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         stopOnFailure="true"
+         strict="true"
+         verbose="true"
+         bootstrap="vendor/autoload.php">
+
+    <testsuites>
+        <testsuite>
+            <directory>./tests/Paystack</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist>
+            <directory>./src/Paystack</directory>
+        </whitelist>
+    </filter>
+
+    <php>
+        <env name="PAYSTACK_SECRET_KEY" value="MySecretKey"/>
+    </php>
+</phpunit>
