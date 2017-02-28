@@ -9,8 +9,7 @@ use function GuzzleHttp\json_decode;
 
 class DeactivateAuthorization extends AbstractPlugin
 {
-
-    const DEACTIVATE_AUTHORIZATION_ENDPOINT = "/deactivate_authorization";
+    const DEACTIVATE_AUTHORIZATION_ENDPOINT = "/customer/deactivate_authorization";
 
     protected $baseUrl;
 
