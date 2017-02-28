@@ -2,7 +2,7 @@
 
 > WIP
 
-> This package is an add-on to the Paystack Adapter provided by [Gbowo](gbowo) and is therefore not guaranteed to have the same API as that of an add-on package of any alternative payment adapter supported by [Gbowo](gbowo)
+> This package is an add-on to the Paystack Adapter provided by [Gbowo][gbowo] and is therefore not guaranteed to have the same API as that of an add-on package of any alternative payment adapter supported by [Gbowo][gbowo]
 
 - [Installation](#install)
 - [Available Plugins](#plugins)
