@@ -2,13 +2,15 @@
 
 namespace Paystack\Customer;
 
+use Gbowo\Adapter\Paystack\Traits\VerifyHttpStatusResponseCode;
 use Gbowo\Plugin\AbstractPlugin;
 use function GuzzleHttp\json_encode;
 use function GuzzleHttp\json_decode;
-use Gbowo\Exception\InvalidHttpResponseException;
 
 class CreateCustomer extends AbstractPlugin
 {
+    use VerifyHttpStatusResponseCode;
+
     const CREATE_CUSTOMER_ENDPOINT = "/customer";
 
     protected $baseUrl;
@@ -30,11 +32,7 @@ class CreateCustomer extends AbstractPlugin
                 'body' => json_encode($data)
             ]);
 
-        if ($response->getStatusCode() !== 200) {
-            throw new InvalidHttpResponseException(
-                "An error occurred while processing this request. Expected 200 response status code, got {$response->getStatusCode()} instead"
-            );
-        }
+        $this->verifyResponse($response);
 
         return json_decode($response->getBody(), true)["data"];
     }

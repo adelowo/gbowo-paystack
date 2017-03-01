@@ -2,13 +2,15 @@
 
 namespace Paystack\Customer;
 
-use Gbowo\Exception\InvalidHttpResponseException;
+use Gbowo\Adapter\Paystack\Traits\VerifyHttpStatusResponseCode;
 use Gbowo\Plugin\AbstractPlugin;
 use function Gbowo\toQueryParams;
 use function GuzzleHttp\json_decode;
 
 class DeactivateAuthorization extends AbstractPlugin
 {
+    use VerifyHttpStatusResponseCode;
+
     const DEACTIVATE_AUTHORIZATION_ENDPOINT = "/customer/deactivate_authorization";
 
     protected $baseUrl;
@@ -32,11 +34,7 @@ class DeactivateAuthorization extends AbstractPlugin
         $response = $this->adapter->getHttpClient()
             ->post($link);
 
-        if ($response->getStatusCode() !== 200) {
-            throw new InvalidHttpResponseException(
-                "An invalid HTTP response code was received. Expected 200, got {$response->getStatusCode()}"
-            );
-        }
+        $this->verifyResponse($response);
 
         return json_decode($response->getBody(), true)["status"];
     }

@@ -2,13 +2,15 @@
 
 namespace Paystack\Customer;
 
+use Gbowo\Adapter\Paystack\Traits\VerifyHttpStatusResponseCode;
 use Gbowo\Plugin\AbstractPlugin;
 use function GuzzleHttp\json_encode;
 use function GuzzleHttp\json_decode;
-use Gbowo\Exception\InvalidHttpResponseException;
 
 class UpdateCustomer extends AbstractPlugin
 {
+    use VerifyHttpStatusResponseCode;
+
     const UPDATE_CUSTOMER_ENDPOINT = "/customer/:identifier";
 
     protected $baseUrl;
@@ -32,11 +34,7 @@ class UpdateCustomer extends AbstractPlugin
                 'body' => json_encode($data)
             ]);
 
-        if ($response->getStatusCode() !== 200) {
-            throw new InvalidHttpResponseException(
-                "An error occurred while updating the customer details"
-            );
-        }
+        $this->verifyResponse($response);
 
         return json_decode($response->getBody(), true)["data"];
     }

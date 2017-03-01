@@ -2,13 +2,16 @@
 
 namespace Paystack\Transaction;
 
+use Gbowo\Adapter\Paystack\Traits\VerifyHttpStatusResponseCode;
 use GuzzleHttp\json_decode;
 use Gbowo\Plugin\AbstractPlugin;
 use Psr\Http\Message\ResponseInterface;
-use Gbowo\Exception\InvalidHttpResponseException;
 
 class ExportTransactions extends AbstractPlugin
 {
+
+    use VerifyHttpStatusResponseCode;
+
     const TRANSACTION_ENDPOINT = "/transaction/export";
 
     protected $baseUrl;
@@ -30,11 +33,7 @@ class ExportTransactions extends AbstractPlugin
 
         $response = $this->getExportedTransactions($link);
 
-        if ($response->getStatusCode() !== 200) {
-            throw new InvalidHttpResponseException(
-                "An error occurred while your transactions were being exported"
-            );
-        }
+        $this->verifyResponse($response);
 
         return json_decode($response->getBody(), true)["data"]["path"];
     }

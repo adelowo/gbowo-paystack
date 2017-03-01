@@ -2,12 +2,15 @@
 
 namespace Paystack\Transaction;
 
+use Gbowo\Adapter\Paystack\Traits\VerifyHttpStatusResponseCode;
 use Gbowo\Plugin\AbstractPlugin;
 use function GuzzleHttp\json_decode;
-use Gbowo\Exception\InvalidHttpResponseException;
 
 class GetTransaction extends AbstractPlugin
 {
+
+    use VerifyHttpStatusResponseCode;
+
     const SINGLE_TRANSACTION_ENDPOINT = "/transaction/:identifier";
 
     protected $baseUrl;
@@ -29,11 +32,7 @@ class GetTransaction extends AbstractPlugin
         $response = $this->adapter->getHttpClient()
             ->get($link);
 
-        if ($response->getStatusCode() !== 200) {
-            throw new InvalidHttpResponseException(
-                "An error occurred while fetching the customer's details. Expected 200, got {$response->getStatusCode()}"
-            );
-        }
+        $this->verifyResponse($response);
 
         return json_decode($response->getBody(), true)["data"];
     }
