@@ -25,7 +25,7 @@ class UpdateCustomer extends AbstractPlugin
         return "updateCustomer";
     }
 
-    public function handle(string $customerIdentifier, array $data)
+    public function handle(string $customerIdentifier, array $data = [])
     {
         $link = str_replace(":identifier", $customerIdentifier, $this->baseUrl . self::UPDATE_CUSTOMER_ENDPOINT);
 
