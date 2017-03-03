@@ -2,10 +2,6 @@
   "name": "adelowo/gbowo-paystack",
   "description": "A package providing extra plugins for Gbowo's Paystack Adapter",
   "type": "library",
-  "require": {
-    "php": "~7.0",
-    "adelowo/gbowo": "^1.4.1"
-  },
   "license": "MIT",
   "authors": [
     {
@@ -15,6 +11,10 @@
       "role" : "Developer"
     }
   ],
+  "require": {
+    "php": "~7.0",
+    "adelowo/gbowo": "^1.4"
+  },
   "require-dev": {
     "phpunit/phpunit": "^6.0",
     "mockery/mockery": "^0.9.8"
@@ -28,5 +28,6 @@
     "psr-4": {
       "Paystack\\Tests\\" : "tests/Paystack/"
     }
-  }
+  },
+  "keywords" : ["gbowo", "paystack"]
 }
