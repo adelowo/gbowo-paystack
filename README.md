@@ -1,6 +1,11 @@
-# Gbowo-Paystack - An extra set of plugins for Gbowo's Paystack adapter
+## Gbowo-Paystack - An extra set of plugins for Gbowo's Paystack adapter
 
-> WIP
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/adelowo/gbowo-paystack.svg?style=flat-square)](https://packagist.org/packages/adelowo/gbowo-paystack)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
+[![Build Status](https://img.shields.io/travis/adelowo/gbowo-paystack/master.svg?style=flat-square)](https://travis-ci.org/adelowo/gbowo-paystack)
+[![Scrutinizer Coverage](https://img.shields.io/scrutinizer/coverage/g/adelowo/gbowo-paystack.svg?style=flat-square)](https://scrutinizer-ci.com/g/adelowo/gbowo-paystack/?branch=master)
+[![Quality Score](https://img.shields.io/scrutinizer/g/adelowo/gbowo-paystack.svg?style=flat-square)](https://scrutinizer-ci.com/g/adelowo/gbowo-paystack)
+[![Total Downloads](https://img.shields.io/packagist/dt/adelowo/gbowo-paystack.svg?style=flat-square)](https://packagist.org/packages/adelowo/gbowo-paystack)
 
 > This package is an add-on to the Paystack Adapter provided by [Gbowo][gbowo] and is therefore not guaranteed to have the same API as that of an add-on package of any alternative payment adapter supported by [Gbowo][gbowo]
 
@@ -10,8 +15,18 @@
 
 <h2 id="install"></h2>
 
+```bash
+$ composer require adelowo/gbowo-paystack
+```
+### Usage
+
+[Gbowo's doc][gbowo] is highly recommended and is a good place to start.
+
+Depending on what you are trying to accomplish, you'd ideally want to take a look at all available plugins here:
 
 <h2 id="plugins"></h2>
+
+> Only add plugins you need. There isn't a reason to add everything into the adapter.
 
 - `Paystack\Customer\CreateCustomer` : Create a new customer
 
@@ -43,7 +58,7 @@ $data = $paystack->updateCustomer("customerCode", ["email" => "lanre@coolstartup
 
 ```php
 
-$paystack->addPlugin(new Paystack\Customer\DeactivateAuthorization(PaystackAdapter::API_LINK));
+$paystack->addPlugin(new Paystack\Transaction\DeactivateAuthorization(PaystackAdapter::API_LINK));
 
 $isDeactivated = $paystack->deactivateAuthorization("AUTH_cod3_h3r3");
 
@@ -54,7 +69,7 @@ $isDeactivated = $paystack->deactivateAuthorization("AUTH_cod3_h3r3");
 
 ```php
 
-$paystack->addPlugin(new Paystack\Customer\ExportTransactions(PaystackAdapter::API_LINK));
+$paystack->addPlugin(new Paystack\Transaction\ExportTransactions(PaystackAdapter::API_LINK));
 
 //can also pass in an array into the method call,
 //e.g ["settled" => true, "currency" => "NGN", "status" => "Some status"]
@@ -69,13 +84,65 @@ $pathToFile = $paystack->exportTransactions();
 
 ```php
 
-$paystack->addPlugin(new Paystack\Customer\GetTransaction(PaystackAdapter::API_LINK));
+$paystack->addPlugin(new Paystack\Transaction\GetTransaction(PaystackAdapter::API_LINK));
 
 $data = $paystack->getTransaction("20911");
 
 //$data would contain everything paystack knows about that transaction
 ```
 
+- `Paystack\Subscription\CreateSubscription` - Add a new subscription to the dashboard
+
+```php
+$paystack->addPlugin(new Paystack\Subscription\CreateSubscription(PaystackAdapter::API_LINK));
+
+$data = $paystack->createSubscription(string $customerCode, string $planCode, string $customerAuthCode = "");
+//The customer auth code can be excluded as it is only useful for customers with multiple authorizations.
+//Please check the docs.
+
+```
+
+- `Paystack\Subscription\GetAllSubscriptions` - Retrieve all subscriptions in the dashboard
+
+```php
+$paystack->addPlugin(new Paystack\Subscription\GetAllSubscriptions(PaystackAdapter::API_LINK));
+
+$data = $paystack->getAllSubscriptions();
+
+```
+
+- `Paystack\Subscription\GetSubscription` - Retrieve a certain subscription from the dashboard
+
+```php
+$paystack->addPlugin(new Paystack\Subscription\GetSubscription(PaystackAdapter::API_LINK));
+
+$data = $paystack->getSubscription("SUB_code");
+
+```
+
+- `Paystack\Plan\CreatePlan` - Adds a new plan to the dashboard
+
+```php
+$paystack->addPlugin(new Paystack\Plan\CreatePlan(PaystackAdapter::API_LINK));
+
+$params = ["name" => "some plan", "amount" => 1000, "interval" => "hourly"];
+//visit the api docs to see all possible data that can be sent
+
+$data = $paystack->createPlan($params);
+
+```
+
+- `Paystack\Plan\UpdatePlan` - Updates a plan in the dashboard
+
+```php
+$paystack->addPlugin(new Paystack\Plan\UpdatePlan(PaystackAdapter::API_LINK));
+
+$params = ["name" => "renaming this plan", "amount" => 2000, "interval" => "weekly"];
+//visit the api docs to see all possible data that can be sent
+
+$data = $paystack->updatePlan($params);
+
+```
 
 ### Contributing
 
