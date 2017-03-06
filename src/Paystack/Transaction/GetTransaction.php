@@ -25,9 +25,9 @@ class GetTransaction extends AbstractPlugin
         return "getTransaction";
     }
 
-    public function handle(string $transactionReference)
+    public function handle(string $transactionId)
     {
-        $link = $this->baseUrl . str_replace(":identifier", $transactionReference, self::SINGLE_TRANSACTION_ENDPOINT);
+        $link = $this->baseUrl . str_replace(":identifier", $transactionId, self::SINGLE_TRANSACTION_ENDPOINT);
 
         $response = $this->adapter->getHttpClient()
             ->get($link);
