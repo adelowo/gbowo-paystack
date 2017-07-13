@@ -140,8 +140,9 @@ $paystack->addPlugin(new Paystack\Plan\UpdatePlan(PaystackAdapter::API_LINK));
 $params = ["name" => "renaming this plan", "amount" => 2000, "interval" => "weekly"];
 //visit the api docs to see all possible data that can be sent
 
-$data = $paystack->updatePlan($params);
-
+$status = $paystack->updatePlan(
+	"PLN_gx2wn530m0i3w3m",
+         ["name" => "renaming this plan yet again", "amount" => \Gbowo\toKobo(200000), "interval" => "weekly"]);
 ```
 
 ### Contributing
