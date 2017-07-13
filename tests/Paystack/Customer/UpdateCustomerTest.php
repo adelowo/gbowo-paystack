@@ -86,8 +86,7 @@ class UpdateCustomerTest extends TestCase
             ->andReturn($response);
 
         $response->shouldReceive("getStatusCode")
-            ->atMost()
-            ->twice()
+            ->once()
             ->andReturn(204);
 
         $response->shouldReceive("getBody")

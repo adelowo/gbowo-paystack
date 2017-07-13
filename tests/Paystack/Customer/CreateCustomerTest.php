@@ -70,7 +70,7 @@ class CreateCustomerTest extends TestCase
             ->andReturn($response);
 
         $response->shouldReceive("getStatusCode")
-            ->twice()
+            ->once()
             ->andReturn(404);
 
         $response->shouldReceive("getBody")

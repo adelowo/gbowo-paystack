@@ -50,7 +50,7 @@ class DeactivateAuthorizationTest extends TestCase
         $response = $this->getMockedResponseInterface();
 
         $response->shouldReceive("getStatusCode")
-            ->twice()
+            ->once()
             ->andReturn(203);
 
         $response->shouldReceive("getBody")

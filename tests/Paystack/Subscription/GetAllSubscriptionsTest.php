@@ -51,7 +51,7 @@ class GetAllSubscriptionsTest extends TestCase
         $response = $this->getMockedResponseInterface();
 
         $response->shouldReceive("getStatusCode")
-            ->twice()
+            ->once()
             ->andReturn(204);
 
         $response->shouldReceive("getBody")
