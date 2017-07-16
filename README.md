@@ -143,7 +143,46 @@ $params = ["name" => "renaming this plan", "amount" => 2000, "interval" => "week
 $status = $paystack->updatePlan(
 	"PLN_gx2wn530m0i3w3m",
          ["name" => "renaming this plan yet again", "amount" => \Gbowo\toKobo(200000), "interval" => "weekly"]);
+
+	
 ```
+
+- `Paystack\Bank\ListBanks` - Fetch a list of all banks known to Paystack
+
+```php
+
+$paystack->addPlugin(new ListBanks(PaystackAdapter::API_LINK));
+
+$banks = $paystack->listBanks();
+
+```
+
+
+- `Paystack\Bank\GetBVN` - Fetch the details of a user's BVN (Bank Verification Number)
+
+```php
+$paystack->addPlugin(new GetBVN(PaystackAdapter::API_LINK));
+$data = $paystack->getBVN("12345678901"); //Must be 11 digits, else an exception is thrown
+```
+
+
+- `Paystack\Bank\GetAccountDetails` - Fetch the details of a user's account number.
+
+```php
+
+$paystack->addPlugin(new GetAccountDetails(PaystackAdapter::API_LINK));
+
+//Yeah, that's a valid account number. Run the code to get my bank details and throw me some cash :)
+$data = $paystack->getAccountDetails(["account_number" => "0115544526", "bank_code" => "058"]));
+```
+
+- `Paystack\Bank\GetCardBIN` - Fetch the details of a card via it's BIN (Bank Identification number)
+
+```php
+$paystack->addPlugin(new GetCardBIN(PaystackAdapter::API_LINK));
+$data = $paystack->getCardBIN("123456");
+```
+
 
 ### Contributing
 
