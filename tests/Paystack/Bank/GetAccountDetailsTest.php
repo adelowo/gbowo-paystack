@@ -2,6 +2,7 @@
 
 namespace Paystack\Tests\Bank;
 
+use Exception;
 use Gbowo\Adapter\Paystack\PaystackAdapter;
 use Gbowo\Exception\InvalidHttpResponseException;
 use Paystack\Bank\GetAccountDetails;
@@ -47,6 +48,35 @@ class GetAccountDetailsTest extends TestCase
         $res = $paystack->getAccountDetails(["account_number" => "0022728151", "bank_code" => "063"]);
 
         $this->assertEquals($data["data"], $res);
+    }
+
+    public function testInvalidParams()
+    {
+        //This test checks if the mandatory "account_number" and "bank_code" are present in the params passed to the plugin
+
+        $this->expectException(Exception::class);
+
+        $response = $this->getMockedResponseInterface();
+
+        $response->shouldReceive("getStatusCode")
+            ->never()
+            ->andReturn(204);
+
+        $response->shouldReceive("getBody")
+            ->never()
+            ->andReturnNull();
+
+        $client = $this->getMockedGuzzle();
+
+        $client->shouldReceive("get")
+            ->never()
+            ->andReturn($response);
+
+        $paystack = new PaystackAdapter($client);
+
+        $paystack->addPlugin(new GetAccountDetails(PaystackAdapter::API_LINK));
+
+        $res = $paystack->getAccountDetails(["account_numbe" => "0022728151", "bank_cod" => "063"]);
     }
 
     public function testAnInvalidHttpResponseIsReceived()
