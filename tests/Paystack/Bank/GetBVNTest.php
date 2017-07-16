@@ -2,6 +2,7 @@
 
 namespace Paystack\Tests\Bank;
 
+use Exception;
 use Gbowo\Adapter\Paystack\PaystackAdapter;
 use Gbowo\Exception\InvalidHttpResponseException;
 use Paystack\Bank\GetBVN;
@@ -53,11 +54,38 @@ class GetBVNTest extends TestCase
 
         $res = $paystack->getBVN(12345678901);
 
-	//Make sure we get only the data and meta keys
-	unset($data["status"]);
-	unset($data["message"]);
+        //Make sure we get only the data and meta keys
+        unset($data["status"]);
+        unset($data["message"]);
 
         $this->assertEquals($data, $res);
+    }
+
+    public function testBVNMustBeElevenDigits()
+    {
+        $this->expectException(Exception::class);
+
+        $response = $this->getMockedResponseInterface();
+
+        $response->shouldReceive("getStatusCode")
+            ->never()
+            ->andReturn(204);
+
+        $response->shouldReceive("getBody")
+            ->never()
+            ->andReturnNull();
+
+        $client = $this->getMockedGuzzle();
+
+        $client->shouldReceive("get")
+            ->never()
+            ->andReturn($response);
+
+        $paystack = new PaystackAdapter($client);
+
+        $paystack->addPlugin(new GetBVN(PaystackAdapter::API_LINK));
+
+        $res = $paystack->getBVN("1234567890");
     }
 
     public function testAnInvalidHttpResponseIsReceived()
