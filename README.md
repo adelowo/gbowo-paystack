@@ -154,6 +154,7 @@ $status = $paystack->updatePlan(
 $paystack->addPlugin(new ListBanks(PaystackAdapter::API_LINK));
 
 $banks = $paystack->listBanks();
+// $paystack->listBanks(["perPage" => 20, "page" => 2]); //show 20 banks and show results from the second page (the results are paginated) 
 
 ```
 
