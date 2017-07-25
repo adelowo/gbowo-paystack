@@ -185,6 +185,14 @@ $data = $paystack->getCardBIN("123456");
 ```
 
 
+- `Paystack\Customer\CheckPending` - Check the status of a previously pending transaction.
+
+```php
+
+$paystack->addPlugin(new CheckPending(PaystackAdapter::API_LINK));
+$data = $paystack->checkPending($transactionRef);
+```
+
 ### Contributing
 
 Awesome, I'd love that. Fork, send PR. But hey, unit testing is one honking great idea. Let's have more of that.
