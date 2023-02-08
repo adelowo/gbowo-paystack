@@ -12,8 +12,8 @@
     }
   ],
   "require": {
-    "php": "~7.0",
-    "adelowo/gbowo": "^1.4"
+    "php": "~7.0|^8.0",
+    "adelowo/gbowo": "^1.4|master"
   },
   "require-dev": {
     "phpunit/phpunit": "^6.0",
@@ -29,5 +29,11 @@
       "Paystack\\Tests\\" : "tests/Paystack/"
     }
   },
-  "keywords" : ["gbowo", "paystack"]
+ "keywords" : ["gbowo", "paystack"],
+ "repositories": [
+    {
+      "type": "vcs",
+      "url" : "https://github.com/xavi7th/gbowo"
+    }
+  ]
 }
